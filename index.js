@@ -19,10 +19,22 @@ mongoose
 // importamos el modelo de User
 const User = require('./models/User');
 
-app.get('/', (req, res) => {
+// rutas para el recurso usuario
+// ruta para TODOS los usuarios
+app.get('/users', (req, res) => {
   User.find().exec((err, users) => {
     res.json(users);
   });
+});
+// ruta para un usuario en particular por ID
+app.get('/users/:id', (req, res) => {
+  User.find({ id: req.params.id }).exec((err, user) => {
+    res.json(user);
+  });
+});
+
+app.get('/', (req, res) => {
+  res.send('Usar los endpoints /users o /users/id');
 });
 
 app.listen(port, () => {
